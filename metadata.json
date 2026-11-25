@@ -1,0 +1,6 @@
+{
+  "name": "LockedIn — Apple HIG Personal Life & Focus OS",
+  "description": "Un sistema operativo personale ispirato alle Human Interface Guidelines di Apple per organizzare compiti quotidiani, tracciare abitudini, prioritizzare obiettivi a lungo termine e vincere l'ansia da approccio.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

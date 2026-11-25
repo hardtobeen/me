@@ -1,0 +1,19 @@
+{
+  "name": "LockedIn — Apple HIG Personal Life & Focus OS",
+  "short_name": "LockedIn",
+  "description": "Un sistema operativo personale ispirato alle Human Interface Guidelines di Apple per organizzare compiti, abitudini, bilancio e obiettivi con memoria permanente.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
