@@ -12,6 +12,7 @@ import {
   calculateRejectionTargetProgress,
   generateDailyActionableInsight,
 } from './lifeOsLogic';
+import { parseAndValidateBackup } from './persistentStorage';
 
 test('calculateHabitStreak counts consecutive days accurately', () => {
   const today = '2026-10-26';
@@ -70,4 +71,26 @@ test('generateDailyActionableInsight flags when more than 2 fronts are open', ()
 
   assert.equal(insight.tag, 'focus');
   assert.match(insight.title, /Fronti Aperti/);
+});
+
+test('parseAndValidateBackup strips prototype pollution keys and sanitizes invalid fields', () => {
+  const maliciousPayload =
+    '{"__proto__":{"polluted":true},"constructor":{"prototype":{"polluted":true}},' +
+    '"tasks":[{"id":"t1","title":"Legitimate task","completed":"yes","urgent":1}],' +
+    '"financialProfile":{"bankBalance":-500,"expenses":[{"title":"Affitto","amount":-200,"category":"unknown_cat","paid":false}],"incomes":[]}}';
+
+  const validated = parseAndValidateBackup(maliciousPayload);
+  assert.equal(({} as Record<string, unknown>).polluted, undefined);
+  assert.equal(Object.prototype.hasOwnProperty.call(validated, '__proto__'), false);
+  assert.equal(validated.tasks?.[0].title, 'Legitimate task');
+  assert.equal(validated.tasks?.[0].completed, false);
+  assert.equal(validated.financialProfile?.bankBalance, 0);
+  assert.equal(validated.financialProfile?.expenses[0].amount, 0);
+  assert.equal(validated.financialProfile?.expenses[0].category, 'altro');
+});
+
+test('parseAndValidateBackup rejects oversized or non-object payloads', () => {
+  assert.throws(() => parseAndValidateBackup('[]'), /Struttura del backup non valida/);
+  const oversized = 'x'.repeat(10 * 1024 * 1024 + 10);
+  assert.throws(() => parseAndValidateBackup(oversized), /troppo grande/);
 });

@@ -52,9 +52,23 @@ import {
   AppFullState,
 } from './utils/persistentStorage';
 
+function safeSetLocalStorage(key: string, value: string): void {
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(key, value);
+    }
+  } catch {
+    // Ignore QuotaExceededError / private mode localStorage restrictions; IndexedDB remains authoritative
+  }
+}
+
 function isV5VirginInitialized(): boolean {
   if (typeof window === 'undefined') return false;
-  return localStorage.getItem(LS_KEYS.VIRGIN_SLATE) === 'true';
+  try {
+    return localStorage.getItem(LS_KEYS.VIRGIN_SLATE) === 'true';
+  } catch {
+    return false;
+  }
 }
 
 function readCachedArray<T>(key: string): T[] {
@@ -125,6 +139,26 @@ export default function App() {
   }, []);
 
   const isHydratedRef = useRef(false);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const latestStateRef = useRef({
+    projects,
+    habits,
+    tasks,
+    rejections,
+    journalEntries,
+    reminders,
+    financialProfile,
+  });
+
+  latestStateRef.current = {
+    projects,
+    habits,
+    tasks,
+    rejections,
+    journalEntries,
+    reminders,
+    financialProfile,
+  };
 
   useEffect(() => {
     async function initStorageVault() {
@@ -133,18 +167,54 @@ export default function App() {
         const status = await getStorageStatus();
         setStorageStatus(status);
 
-        const isV5Virgin = localStorage.getItem(LS_KEYS.VIRGIN_SLATE) === 'true';
+        // Always inspect IndexedDB FIRST so cleared localStorage never wipes persisted IndexedDB data
+        const idbState = await loadFromIndexedDB();
+        const isV5Virgin = isV5VirginInitialized();
 
-        if (!isV5Virgin) {
-          localStorage.clear();
-          localStorage.setItem(LS_KEYS.PROJECTS, JSON.stringify([]));
-          localStorage.setItem(LS_KEYS.HABITS, JSON.stringify([]));
-          localStorage.setItem(LS_KEYS.TASKS, JSON.stringify([]));
-          localStorage.setItem(LS_KEYS.REJECTIONS, JSON.stringify([]));
-          localStorage.setItem(LS_KEYS.JOURNAL, JSON.stringify([]));
-          localStorage.setItem(LS_KEYS.REMINDERS, JSON.stringify(DEFAULT_REMINDERS));
-          localStorage.setItem(LS_KEYS.FINANCE, JSON.stringify(INITIAL_FINANCIAL_PROFILE));
-          localStorage.setItem(LS_KEYS.VIRGIN_SLATE, 'true');
+        if (idbState) {
+          if (Array.isArray(idbState.projects)) {
+            setProjects(idbState.projects);
+            safeSetLocalStorage(LS_KEYS.PROJECTS, JSON.stringify(idbState.projects));
+          }
+          if (Array.isArray(idbState.habits)) {
+            setHabits(idbState.habits);
+            safeSetLocalStorage(LS_KEYS.HABITS, JSON.stringify(idbState.habits));
+          }
+          if (Array.isArray(idbState.tasks)) {
+            setTasks(idbState.tasks);
+            safeSetLocalStorage(LS_KEYS.TASKS, JSON.stringify(idbState.tasks));
+          }
+          if (Array.isArray(idbState.rejections)) {
+            setRejections(idbState.rejections);
+            safeSetLocalStorage(LS_KEYS.REJECTIONS, JSON.stringify(idbState.rejections));
+          }
+          if (Array.isArray(idbState.journalEntries)) {
+            setJournalEntries(idbState.journalEntries);
+            safeSetLocalStorage(LS_KEYS.JOURNAL, JSON.stringify(idbState.journalEntries));
+          }
+          if (Array.isArray(idbState.reminders)) {
+            setReminders(idbState.reminders);
+            safeSetLocalStorage(LS_KEYS.REMINDERS, JSON.stringify(idbState.reminders));
+          }
+          if (idbState.financialProfile && typeof idbState.financialProfile.bankBalance === 'number') {
+            setFinancialProfile(idbState.financialProfile);
+            safeSetLocalStorage(LS_KEYS.FINANCE, JSON.stringify(idbState.financialProfile));
+          }
+          safeSetLocalStorage(LS_KEYS.VIRGIN_SLATE, 'true');
+        } else if (!isV5Virgin) {
+          try {
+            localStorage.clear();
+          } catch {
+            // Ignore private mode restrictions
+          }
+          safeSetLocalStorage(LS_KEYS.PROJECTS, JSON.stringify([]));
+          safeSetLocalStorage(LS_KEYS.HABITS, JSON.stringify([]));
+          safeSetLocalStorage(LS_KEYS.TASKS, JSON.stringify([]));
+          safeSetLocalStorage(LS_KEYS.REJECTIONS, JSON.stringify([]));
+          safeSetLocalStorage(LS_KEYS.JOURNAL, JSON.stringify([]));
+          safeSetLocalStorage(LS_KEYS.REMINDERS, JSON.stringify(DEFAULT_REMINDERS));
+          safeSetLocalStorage(LS_KEYS.FINANCE, JSON.stringify(INITIAL_FINANCIAL_PROFILE));
+          safeSetLocalStorage(LS_KEYS.VIRGIN_SLATE, 'true');
 
           setProjects([]);
           setHabits([]);
@@ -171,38 +241,6 @@ export default function App() {
             lastSavedAt: `Oggi alle ${nowStr}`,
             version: '5.0',
           });
-        } else {
-          const idbState = await loadFromIndexedDB();
-          if (idbState) {
-            if (Array.isArray(idbState.projects)) {
-              setProjects(idbState.projects);
-              localStorage.setItem(LS_KEYS.PROJECTS, JSON.stringify(idbState.projects));
-            }
-            if (Array.isArray(idbState.habits)) {
-              setHabits(idbState.habits);
-              localStorage.setItem(LS_KEYS.HABITS, JSON.stringify(idbState.habits));
-            }
-            if (Array.isArray(idbState.tasks)) {
-              setTasks(idbState.tasks);
-              localStorage.setItem(LS_KEYS.TASKS, JSON.stringify(idbState.tasks));
-            }
-            if (Array.isArray(idbState.rejections)) {
-              setRejections(idbState.rejections);
-              localStorage.setItem(LS_KEYS.REJECTIONS, JSON.stringify(idbState.rejections));
-            }
-            if (Array.isArray(idbState.journalEntries)) {
-              setJournalEntries(idbState.journalEntries);
-              localStorage.setItem(LS_KEYS.JOURNAL, JSON.stringify(idbState.journalEntries));
-            }
-            if (Array.isArray(idbState.reminders)) {
-              setReminders(idbState.reminders);
-              localStorage.setItem(LS_KEYS.REMINDERS, JSON.stringify(idbState.reminders));
-            }
-            if (idbState.financialProfile && typeof idbState.financialProfile.bankBalance === 'number') {
-              setFinancialProfile(idbState.financialProfile);
-              localStorage.setItem(LS_KEYS.FINANCE, JSON.stringify(idbState.financialProfile));
-            }
-          }
         }
       } catch (err) {
         console.warn('Storage init failed:', err);
@@ -216,20 +254,20 @@ export default function App() {
   useEffect(() => {
     if (!isHydratedRef.current) return;
 
-    localStorage.setItem(LS_KEYS.PROJECTS, JSON.stringify(projects));
-    localStorage.setItem(LS_KEYS.HABITS, JSON.stringify(habits));
-    localStorage.setItem(LS_KEYS.TASKS, JSON.stringify(tasks));
-    localStorage.setItem(LS_KEYS.REJECTIONS, JSON.stringify(rejections));
-    localStorage.setItem(LS_KEYS.JOURNAL, JSON.stringify(journalEntries));
-    localStorage.setItem(LS_KEYS.REMINDERS, JSON.stringify(reminders));
-    localStorage.setItem(LS_KEYS.FINANCE, JSON.stringify(financialProfile));
+    safeSetLocalStorage(LS_KEYS.PROJECTS, JSON.stringify(projects));
+    safeSetLocalStorage(LS_KEYS.HABITS, JSON.stringify(habits));
+    safeSetLocalStorage(LS_KEYS.TASKS, JSON.stringify(tasks));
+    safeSetLocalStorage(LS_KEYS.REJECTIONS, JSON.stringify(rejections));
+    safeSetLocalStorage(LS_KEYS.JOURNAL, JSON.stringify(journalEntries));
+    safeSetLocalStorage(LS_KEYS.REMINDERS, JSON.stringify(reminders));
+    safeSetLocalStorage(LS_KEYS.FINANCE, JSON.stringify(financialProfile));
 
     const nowStr = new Intl.DateTimeFormat('it-IT', {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
     }).format(new Date());
-    localStorage.setItem(LS_KEYS.LAST_SAVED, `Oggi alle ${nowStr}`);
+    safeSetLocalStorage(LS_KEYS.LAST_SAVED, `Oggi alle ${nowStr}`);
 
     const fullRecord: AppFullState = {
       projects,
@@ -269,13 +307,7 @@ export default function App() {
       }).format(new Date());
 
       saveToIndexedDB({
-        projects,
-        habits,
-        tasks,
-        rejections,
-        journalEntries,
-        reminders,
-        financialProfile,
+        ...latestStateRef.current,
         lastSavedAt: `Oggi alle ${nowStr}`,
         version: '5.0',
       });
@@ -290,11 +322,46 @@ export default function App() {
       window.removeEventListener('pagehide', handleEmergencySave);
       window.removeEventListener('beforeunload', handleEmergencySave);
     };
-  }, [projects, habits, tasks, rejections, journalEntries, reminders, financialProfile]);
+  }, []);
+
+  // Lightweight local reminder scheduler (checks every 30s, zero external network usage)
+  const firedRemindersRef = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    const checkReminders = () => {
+      const now = new Date();
+      const dateStr = now.toISOString().split('T')[0];
+      const hhmm = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      for (const rem of latestStateRef.current.reminders) {
+        if (!rem.enabled || rem.time !== hhmm) continue;
+        const fireKey = `${dateStr}:${rem.id}:${hhmm}`;
+        if (!firedRemindersRef.current.has(fireKey)) {
+          firedRemindersRef.current.add(fireKey);
+          if (firedRemindersRef.current.size > 200) {
+            firedRemindersRef.current.clear();
+            firedRemindersRef.current.add(fireKey);
+          }
+          sendPushNotification(`LockedIn — ${rem.title}`, rem.message);
+        }
+      }
+    };
+
+    checkReminders();
+    const timerId = window.setInterval(checkReminders, 30000);
+    return () => window.clearInterval(timerId);
+  }, []);
 
   const playTactileFeedback = () => {
     try {
-      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
+        audioCtxRef.current = new AudioCtx();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === 'suspended') {
+        void ctx.resume();
+      }
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
@@ -675,8 +742,12 @@ export default function App() {
     setReminders(DEFAULT_REMINDERS);
     setFinancialProfile(INITIAL_FINANCIAL_PROFILE);
 
-    localStorage.clear();
-    localStorage.setItem(LS_KEYS.VIRGIN_SLATE, 'true');
+    try {
+      localStorage.clear();
+    } catch {
+      // Ignore private mode restrictions
+    }
+    safeSetLocalStorage(LS_KEYS.VIRGIN_SLATE, 'true');
 
     const nowStr = new Intl.DateTimeFormat('it-IT', {
       hour: '2-digit',
@@ -703,6 +774,12 @@ export default function App() {
   const handleImportData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      setStatusFeedback('File di backup troppo grande (limite massimo 10 MB).');
+      setTimeout(() => setStatusFeedback(null), 5000);
+      e.target.value = '';
+      return;
+    }
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
