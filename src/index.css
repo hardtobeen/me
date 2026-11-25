@@ -21,6 +21,8 @@
     background-color: #07090b;
     color: #f5f7fa;
     font-family: var(--font-sans);
+    overflow-x: clip;
+    width: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;

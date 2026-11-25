@@ -64,12 +64,12 @@ export function JournalView({
   };
 
   return (
-    <div className="space-y-6 pb-8">
+    <div className="space-y-6 pb-8 min-w-0">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         {/* LEFT PANEL (7 cols): Evening Debrief Form */}
         <form
           onSubmit={handleSubmit}
-          className="lg:col-span-7 hud-glass rounded-[18px] p-5 sm:p-6 space-y-5"
+          className="lg:col-span-7 hud-glass rounded-[18px] p-4 sm:p-6 space-y-5 min-w-0"
         >
           <HudSectionHeader
             code="01"
@@ -123,28 +123,32 @@ export function JournalView({
 
           {/* Binary Self-Honesty Check */}
           <div className="space-y-3 pt-3 border-t border-white/[0.08]">
-            <div className="flex items-center justify-between gap-4">
-              <div>
+            <div className="flex items-center justify-between gap-4 min-w-0">
+              <div className="min-w-0 flex-1">
                 <span className="text-[14px] font-medium text-white block">
                   Hai affrontato il disagio oggi?
                 </span>
-                <span className="text-[12px] text-[#7A828C]">
+                <span className="text-[12px] text-[#7A828C] break-words">
                   Hai svolto l'azione importante invece di rimandarla?
                 </span>
               </div>
-              <AppleToggle checked={facingDiscomfort} onChange={setFacingDiscomfort} />
+              <div className="shrink-0">
+                <AppleToggle checked={facingDiscomfort} onChange={setFacingDiscomfort} />
+              </div>
             </div>
 
-            <div className="flex items-center justify-between gap-4">
-              <div>
+            <div className="flex items-center justify-between gap-4 min-w-0">
+              <div className="min-w-0 flex-1">
                 <span className="text-[14px] font-medium text-white block">
                   Nessuna distrazione passiva?
                 </span>
-                <span className="text-[12px] text-[#7A828C]">
+                <span className="text-[12px] text-[#7A828C] break-words">
                   Sei rimasto focalizzato senza fughe mentali durante la giornata?
                 </span>
               </div>
-              <AppleToggle checked={avoidedDistractions} onChange={setAvoidedDistractions} />
+              <div className="shrink-0">
+                <AppleToggle checked={avoidedDistractions} onChange={setAvoidedDistractions} />
+              </div>
             </div>
           </div>
 
@@ -198,7 +202,7 @@ export function JournalView({
         </form>
 
         {/* RIGHT PANEL (5 cols): History Log */}
-        <section className="lg:col-span-5 hud-glass rounded-[18px] p-5 sm:p-6 space-y-4">
+        <section className="lg:col-span-5 hud-glass rounded-[18px] p-4 sm:p-6 space-y-4 min-w-0">
           <HudSectionHeader
             code="02"
             label="Archivio Diario"
@@ -220,32 +224,32 @@ export function JournalView({
                 return (
                   <div
                     key={entry.id}
-                    className="p-4 rounded-[14px] hud-cell space-y-2.5"
+                    className="p-4 rounded-[14px] hud-cell space-y-2.5 min-w-0"
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
                       <span className="font-mono text-[11px] font-semibold text-[#D4D8DD] tabular-nums">
                         {entry.date}
                       </span>
                       <span className="inline-flex items-center gap-1.5 font-mono text-[10px] px-2 py-0.5 rounded bg-white/[0.06] border border-white/10 text-white">
-                        <MoodIcon className="w-3 h-3" />
+                        <MoodIcon className="w-3 h-3 shrink-0" />
                         {moodInfo.label}
                       </span>
                     </div>
 
                     {entry.dailyWin && (
-                      <p className="flex items-center gap-2 text-[14px] font-semibold text-white">
-                        <Award className="w-4 h-4 text-[#E5943C] shrink-0" />
-                        <span>{entry.dailyWin}</span>
+                      <p className="flex items-start gap-2 text-[14px] font-semibold text-white break-words">
+                        <Award className="w-4 h-4 text-[#E5943C] shrink-0 mt-0.5" />
+                        <span className="min-w-0 break-words">{entry.dailyWin}</span>
                       </p>
                     )}
 
                     {entry.reflection && (
-                      <p className="border-l border-white/15 pl-3 text-[13px] text-[#9EA7B0] leading-relaxed">
+                      <p className="border-l border-white/15 pl-3 text-[13px] text-[#9EA7B0] leading-relaxed break-words">
                         {entry.reflection}
                       </p>
                     )}
 
-                    <div className="flex items-center gap-3 pt-1 font-mono text-[10px] text-[#7A828C]">
+                    <div className="flex items-center flex-wrap gap-x-3 gap-y-1 pt-1 font-mono text-[10px] text-[#7A828C]">
                       <span>{entry.facingDiscomfort ? '✓ Disagio affrontato' : '✗ Evitamento'}</span>
                       <span>·</span>
                       <span>{entry.avoidedDistractions ? '✓ Zero distrazioni' : '✗ Distrazioni'}</span>

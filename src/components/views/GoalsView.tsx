@@ -130,13 +130,13 @@ export function GoalsView({
                 return (
                   <div
                     key={project.id}
-                    className="p-5 sm:p-6 rounded-[18px] hud-glass space-y-4 flex flex-col justify-between"
+                    className="p-4 sm:p-6 rounded-[18px] hud-glass space-y-4 flex flex-col justify-between min-w-0"
                   >
-                    <div className="space-y-4">
+                    <div className="space-y-4 min-w-0">
                       {/* Project Header */}
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <div className="flex items-center gap-2 font-mono text-[10px] text-[#8A929A] mb-1">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 min-w-0">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center flex-wrap gap-x-2 gap-y-0.5 font-mono text-[10px] text-[#8A929A] mb-1">
                             <span>{String(index + 1).padStart(2, '0')}</span>
                             <span>·</span>
                             <span className="text-white uppercase">
@@ -150,21 +150,21 @@ export function GoalsView({
                               <>
                                 <span>·</span>
                                 <span className="inline-flex items-center gap-1">
-                                  <Calendar className="w-3 h-3" />
+                                  <Calendar className="w-3 h-3 shrink-0" />
                                   {project.deadline}
                                 </span>
                               </>
                             )}
                           </div>
-                          <h3 className="text-[18px] font-semibold text-white leading-tight">
+                          <h3 className="text-[18px] font-semibold text-white leading-tight break-words">
                             {project.title}
                           </h3>
-                          <p className="text-[13px] text-[#8A929A] mt-0.5">
+                          <p className="text-[13px] text-[#8A929A] mt-0.5 break-words">
                             {project.shortDesc}
                           </p>
                         </div>
 
-                        <div className="flex items-center gap-1.5 shrink-0">
+                        <div className="flex items-center flex-wrap gap-1.5 shrink-0">
                           {project.targetAmount && (
                             <span className="font-mono text-[11px] font-semibold px-2.5 py-1 rounded-[6px] bg-white/[0.06] border border-white/10 text-white tabular-nums">
                               {project.targetAmount}
@@ -237,14 +237,14 @@ export function GoalsView({
                             {project.milestones.map((m, mIdx) => (
                               <div
                                 key={m.id}
-                                className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-white/[0.03] transition-colors"
+                                className="group flex items-center justify-between gap-2 p-2 rounded-[8px] hover:bg-white/[0.03] transition-colors min-w-0"
                               >
                                 <button
                                   type="button"
                                   onClick={() => onToggleMilestone(project.id, m.id)}
-                                  className="flex-1 flex items-center gap-2.5 text-left apple-tap"
+                                  className="flex-1 min-w-0 flex items-center gap-2.5 text-left apple-tap"
                                 >
-                                  <span className="font-mono text-[10px] text-[#525860] w-4">
+                                  <span className="font-mono text-[10px] text-[#525860] w-4 shrink-0">
                                     {String(mIdx + 1).padStart(2, '0')}
                                   </span>
                                   {m.completed ? (
@@ -253,7 +253,7 @@ export function GoalsView({
                                     <Circle className="w-4 h-4 text-[#484F58] group-hover:text-white shrink-0" />
                                   )}
                                   <span
-                                    className={`text-[13px] leading-snug ${
+                                    className={`text-[13px] leading-snug break-words min-w-0 ${
                                       m.completed ? 'line-through text-[#6E7681]' : 'text-white font-medium'
                                     }`}
                                   >
@@ -265,7 +265,7 @@ export function GoalsView({
                                   type="button"
                                   onClick={() => onDeleteMilestone(project.id, m.id)}
                                   title="Elimina tappa"
-                                  className="opacity-0 group-hover:opacity-100 p-1 text-[#7A828C] hover:text-white apple-tap transition-opacity"
+                                  className="opacity-65 sm:opacity-0 sm:group-hover:opacity-100 p-1.5 text-[#7A828C] hover:text-white apple-tap transition-opacity shrink-0"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
                                 </button>
@@ -278,19 +278,19 @@ export function GoalsView({
 
                     <form
                       onSubmit={(e) => handleAddMilestoneSubmit(project.id, e)}
-                      className="flex items-center gap-2 pt-2 border-t border-white/[0.06]"
+                      className="flex items-center gap-2 pt-2 border-t border-white/[0.06] min-w-0"
                     >
                       <input
                         type="text"
                         value={newMilestoneInputs[project.id] || ''}
                         onChange={(e) => handleMilestoneInputChange(project.id, e.target.value)}
                         placeholder="+ Aggiungi nuova tappa..."
-                        className="flex-1 px-3 py-2 rounded-[8px] bg-[#0A0D10] border border-white/10 text-white text-[13px] focus:border-white/30 outline-none placeholder-[#525860]"
+                        className="flex-1 min-w-0 px-3 py-2 rounded-[8px] bg-[#0A0D10] border border-white/10 text-white text-[13px] focus:border-white/30 outline-none placeholder-[#525860]"
                       />
                       <button
                         type="submit"
                         disabled={!(newMilestoneInputs[project.id] || '').trim()}
-                        className="px-3.5 py-2 rounded-[8px] bg-white text-black hover:bg-white/90 disabled:opacity-30 text-[12px] font-semibold apple-tap"
+                        className="px-3.5 py-2 rounded-[8px] bg-white text-black hover:bg-white/90 disabled:opacity-30 text-[12px] font-semibold apple-tap shrink-0"
                       >
                         Aggiungi
                       </button>
@@ -302,12 +302,12 @@ export function GoalsView({
           ) : (
             /* Tactical Eisenhower Matrix View */
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-5 rounded-[18px] hud-glass border-white/20 space-y-3">
-                <div className="flex items-center justify-between">
+              <div className="p-4 sm:p-5 rounded-[18px] hud-glass border-white/20 space-y-3 min-w-0">
+                <div className="flex items-center justify-between gap-2">
                   <h3 className="text-[15px] font-semibold text-white">
                     01 · Fai Subito (Urgente & Importante)
                   </h3>
-                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white text-black font-bold">
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white text-black font-bold shrink-0">
                     Q1
                   </span>
                 </div>
@@ -317,16 +317,16 @@ export function GoalsView({
                     .map((t) => (
                       <div
                         key={t.id}
-                        className="flex items-center gap-2.5 p-2.5 rounded-[8px] hud-cell text-[13px]"
+                        className="flex items-center gap-2.5 p-2.5 rounded-[8px] hud-cell text-[13px] min-w-0"
                       >
-                        <button type="button" onClick={() => onToggleTask(t.id)} className="apple-tap">
+                        <button type="button" onClick={() => onToggleTask(t.id)} className="apple-tap shrink-0">
                           {t.completed ? (
                             <CheckCircle2 className="w-4 h-4 text-white" />
                           ) : (
                             <Circle className="w-4 h-4 text-[#7A828C]" />
                           )}
                         </button>
-                        <span className={t.completed ? 'line-through text-[#6E7681]' : 'font-medium text-white'}>
+                        <span className={`break-words min-w-0 ${t.completed ? 'line-through text-[#6E7681]' : 'font-medium text-white'}`}>
                           {t.title}
                         </span>
                       </div>
@@ -339,12 +339,12 @@ export function GoalsView({
                 </div>
               </div>
 
-              <div className="p-5 rounded-[18px] hud-glass space-y-3">
-                <div className="flex items-center justify-between">
+              <div className="p-4 sm:p-5 rounded-[18px] hud-glass space-y-3 min-w-0">
+                <div className="flex items-center justify-between gap-2">
                   <h3 className="text-[15px] font-semibold text-white">
                     02 · Pianifica (Importante)
                   </h3>
-                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white/10 text-[#D4D8DD]">
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white/10 text-[#D4D8DD] shrink-0">
                     Q2
                   </span>
                 </div>
@@ -354,16 +354,16 @@ export function GoalsView({
                     .map((t) => (
                       <div
                         key={t.id}
-                        className="flex items-center gap-2.5 p-2.5 rounded-[8px] hud-cell text-[13px]"
+                        className="flex items-center gap-2.5 p-2.5 rounded-[8px] hud-cell text-[13px] min-w-0"
                       >
-                        <button type="button" onClick={() => onToggleTask(t.id)} className="apple-tap">
+                        <button type="button" onClick={() => onToggleTask(t.id)} className="apple-tap shrink-0">
                           {t.completed ? (
                             <CheckCircle2 className="w-4 h-4 text-white" />
                           ) : (
                             <Circle className="w-4 h-4 text-[#7A828C]" />
                           )}
                         </button>
-                        <span className={t.completed ? 'line-through text-[#6E7681]' : 'font-medium text-white'}>
+                        <span className={`break-words min-w-0 ${t.completed ? 'line-through text-[#6E7681]' : 'font-medium text-white'}`}>
                           {t.title}
                         </span>
                       </div>

@@ -92,19 +92,19 @@ export function SettingsView({
   };
 
   return (
-    <div className="space-y-6 pb-8">
+    <div className="space-y-6 pb-8 min-w-0">
       {/* Dynamic Feedback Banner */}
       {(statusFeedback || localFeedback) && (
-        <div className="p-4 rounded-[14px] hud-glass border-white/25 text-white flex items-center gap-3 animate-fade-in">
+        <div className="p-4 rounded-[14px] hud-glass border-white/25 text-white flex items-center gap-3 animate-fade-in min-w-0">
           <CheckCircle2 className="w-5 h-5 shrink-0 text-[#3FB979]" />
-          <p className="text-[13px] font-medium leading-tight">
+          <p className="text-[13px] font-medium leading-tight break-words min-w-0">
             {statusFeedback || localFeedback}
           </p>
         </div>
       )}
 
       {/* 1. Archiviazione Permanente */}
-      <section className="hud-glass rounded-[18px] p-5 sm:p-6 space-y-4">
+      <section className="hud-glass rounded-[18px] p-4 sm:p-6 space-y-4 min-w-0">
         <HudSectionHeader
           code="01"
           label="Archiviazione & Memoria"
@@ -199,7 +199,7 @@ export function SettingsView({
       </section>
 
       {/* 2. Notifiche & Promemoria */}
-      <section className="hud-glass rounded-[18px] p-5 sm:p-6 space-y-4">
+      <section className="hud-glass rounded-[18px] p-4 sm:p-6 space-y-4 min-w-0">
         <HudSectionHeader
           code="02"
           label="Notifiche & Promemoria"
@@ -314,21 +314,21 @@ export function SettingsView({
           ) : (
             <div className="divide-y divide-white/[0.06]">
               {reminders.map((rem) => (
-                <div key={rem.id} className="py-3 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3 min-w-0">
+                <div key={rem.id} className="py-3 flex items-center justify-between gap-3 min-w-0">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
                     <div className="w-8 h-8 rounded-[8px] hud-cell flex items-center justify-center text-[#D4D8DD] shrink-0">
                       <Clock className="w-4 h-4" />
                     </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[14px] font-medium text-white truncate">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center flex-wrap gap-1.5 min-w-0">
+                        <span className="text-[14px] font-medium text-white break-words">
                           {rem.title}
                         </span>
                         <span className="font-mono text-[11px] px-1.5 py-0.5 rounded bg-white/[0.06] border border-white/10 text-[#D4D8DD] shrink-0">
                           {rem.time}
                         </span>
                       </div>
-                      <p className="text-[12px] text-[#7A828C] truncate">{rem.message}</p>
+                      <p className="text-[12px] text-[#7A828C] break-words">{rem.message}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
@@ -355,7 +355,7 @@ export function SettingsView({
       </section>
 
       {/* 3. Reset Applicazione */}
-      <section className="hud-glass rounded-[18px] p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <section className="hud-glass rounded-[18px] p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 min-w-0">
         <div>
           <h4 className="text-[15px] font-semibold text-white">
             Svuota Tutti i Dati

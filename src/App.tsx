@@ -763,12 +763,12 @@ export default function App() {
   );
 
   return (
-    <div className="relative min-h-screen bg-[#07090B] text-white flex flex-col antialiased">
+    <div className="relative min-h-screen w-full overflow-x-clip bg-[#07090B] text-white flex flex-col antialiased">
       {/* Atmospheric Topographic & Radar Coordinate Backdrop */}
       <TacticalBackdrop />
 
       {/* Main Content Area */}
-      <div className="relative z-10 flex-1 flex flex-col min-w-0">
+      <div className="relative z-10 flex-1 flex flex-col min-w-0 w-full">
         <AppleNavBar
           currentTab={currentTab}
           onOpenQuickAdd={() => setIsQuickAddOpen(true)}
@@ -780,7 +780,7 @@ export default function App() {
           }}
         />
 
-        <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-28">
+        <main className="flex-1 w-full max-w-6xl mx-auto px-3.5 sm:px-6 pt-5 sm:pt-6 pb-28 min-w-0">
           {currentTab === 'today' && (
             <TodayView
               tasks={tasks}

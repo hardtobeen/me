@@ -163,9 +163,9 @@ export function MoneyView({
   });
 
   return (
-    <div className="space-y-6 pb-8">
+    <div className="space-y-6 pb-8 min-w-0">
       {/* 1. HERO TELEMETRY CASHFLOW PANEL */}
-      <section className="hud-glass rounded-[18px] p-5 sm:p-6 space-y-5">
+      <section className="hud-glass rounded-[18px] p-4 sm:p-6 space-y-5 min-w-0">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <HudSectionHeader
             code="01"
@@ -226,18 +226,18 @@ export function MoneyView({
         {/* 3-Column Split-Contrast Telemetry Readouts + Horizontal Gauge Bars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
           {/* Tile 01: Saldo Attuale */}
-          <div className="hud-cell rounded-[14px] p-4 flex flex-col justify-between gap-3">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[#8A929A]">
+          <div className="hud-cell rounded-[14px] p-4 flex flex-col justify-between gap-3 min-w-0">
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[#8A929A] truncate">
                 01 · Saldo Attuale
               </span>
-              <span className="font-mono text-[10px] text-[#6E7681]">CONTO</span>
+              <span className="font-mono text-[10px] text-[#6E7681] shrink-0">CONTO</span>
             </div>
-            <div className="flex items-baseline gap-1 tabular-nums">
-              <span className="text-[32px] sm:text-[36px] font-light tracking-[-0.02em] text-white leading-none">
+            <div className="flex items-baseline flex-wrap gap-1 tabular-nums min-w-0">
+              <span className="text-[28px] sm:text-[34px] font-light tracking-[-0.02em] text-white leading-none break-all">
                 {balanceParts.intPart}
               </span>
-              <span className="text-[20px] font-light text-[#6E7681] leading-none">
+              <span className="text-[18px] sm:text-[20px] font-light text-[#6E7681] leading-none shrink-0">
                 {balanceParts.decPart} €
               </span>
             </div>
@@ -253,20 +253,20 @@ export function MoneyView({
           </div>
 
           {/* Tile 02: Spese Previste */}
-          <div className="hud-cell rounded-[14px] p-4 flex flex-col justify-between gap-3">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[#8A929A]">
+          <div className="hud-cell rounded-[14px] p-4 flex flex-col justify-between gap-3 min-w-0">
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[#8A929A] truncate">
                 02 · Spese Previste
               </span>
-              <span className="font-mono text-[10px] text-[#E5943C] tabular-nums">
+              <span className="font-mono text-[10px] text-[#E5943C] tabular-nums shrink-0">
                 {unpaidExpenses.length} APERTE
               </span>
             </div>
-            <div className="flex items-baseline gap-1 tabular-nums">
-              <span className="text-[32px] sm:text-[36px] font-light tracking-[-0.02em] text-[#D4D8DD] leading-none">
+            <div className="flex items-baseline flex-wrap gap-1 tabular-nums min-w-0">
+              <span className="text-[28px] sm:text-[34px] font-light tracking-[-0.02em] text-[#D4D8DD] leading-none break-all">
                 {totalUnpaidAmount > 0 ? '−' : ''}{unpaidParts.intPart}
               </span>
-              <span className="text-[20px] font-light text-[#6E7681] leading-none">
+              <span className="text-[18px] sm:text-[20px] font-light text-[#6E7681] leading-none shrink-0">
                 {unpaidParts.decPart} €
               </span>
             </div>
@@ -282,20 +282,20 @@ export function MoneyView({
           </div>
 
           {/* Tile 03: Residuo Disponibile (Highlighted) */}
-          <div className="rounded-[14px] p-4 bg-white/[0.05] border border-white/20 flex flex-col justify-between gap-3">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-white">
+          <div className="rounded-[14px] p-4 bg-white/[0.05] border border-white/20 flex flex-col justify-between gap-3 min-w-0">
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-white truncate">
                 03 · Residuo Netto
               </span>
-              <span className="font-mono text-[10px] text-[#3FB979] font-semibold">
+              <span className="font-mono text-[10px] text-[#3FB979] font-semibold shrink-0">
                 DISPONIBILE
               </span>
             </div>
-            <div className="flex items-baseline gap-1 tabular-nums">
-              <span className="text-[32px] sm:text-[36px] font-light tracking-[-0.02em] text-white leading-none">
+            <div className="flex items-baseline flex-wrap gap-1 tabular-nums min-w-0">
+              <span className="text-[28px] sm:text-[34px] font-light tracking-[-0.02em] text-white leading-none break-all">
                 {netParts.intPart}
               </span>
-              <span className="text-[20px] font-light text-[#8A929A] leading-none">
+              <span className="text-[18px] sm:text-[20px] font-light text-[#8A929A] leading-none shrink-0">
                 {netParts.decPart} €
               </span>
             </div>
@@ -332,11 +332,11 @@ export function MoneyView({
 
       {/* 2. BARRA FILTRI & AZIONI */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="inline-flex p-1 rounded-[10px] bg-white/[0.04] border border-white/[0.09]">
+        <div className="flex flex-wrap sm:inline-flex p-1 gap-1 rounded-[10px] bg-white/[0.04] border border-white/[0.09] w-full sm:w-auto max-w-full">
           <button
             type="button"
             onClick={() => setFilter('all')}
-            className={`px-3 py-1.5 rounded-[7px] text-[12px] font-medium transition-colors apple-tap ${
+            className={`flex-1 sm:flex-initial px-2.5 sm:px-3 py-1.5 rounded-[7px] text-[12px] font-medium transition-colors apple-tap text-center ${
               filter === 'all' ? 'bg-white text-black font-semibold' : 'text-[#8A929A] hover:text-white'
             }`}
           >
@@ -345,7 +345,7 @@ export function MoneyView({
           <button
             type="button"
             onClick={() => setFilter('unpaid')}
-            className={`px-3 py-1.5 rounded-[7px] text-[12px] font-medium transition-colors apple-tap ${
+            className={`flex-1 sm:flex-initial px-2.5 sm:px-3 py-1.5 rounded-[7px] text-[12px] font-medium transition-colors apple-tap text-center ${
               filter === 'unpaid' ? 'bg-white text-black font-semibold' : 'text-[#8A929A] hover:text-white'
             }`}
           >
@@ -354,7 +354,7 @@ export function MoneyView({
           <button
             type="button"
             onClick={() => setFilter('paid')}
-            className={`px-3 py-1.5 rounded-[7px] text-[12px] font-medium transition-colors apple-tap ${
+            className={`flex-1 sm:flex-initial px-2.5 sm:px-3 py-1.5 rounded-[7px] text-[12px] font-medium transition-colors apple-tap text-center ${
               filter === 'paid' ? 'bg-white text-black font-semibold' : 'text-[#8A929A] hover:text-white'
             }`}
           >
@@ -362,21 +362,21 @@ export function MoneyView({
           </button>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             type="button"
             onClick={() => setIsAddingIncome(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/[0.05] border border-white/10 hover:bg-white/10 text-white text-[13px] font-medium apple-tap min-h-[40px]"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full bg-white/[0.05] border border-white/10 hover:bg-white/10 text-white text-[13px] font-medium apple-tap min-h-[40px]"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3.5 h-3.5 shrink-0" />
             <span>Nuova Entrata</span>
           </button>
           <button
             type="button"
             onClick={() => setIsAddingExpense(true)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-white/90 text-black text-[13px] font-semibold apple-tap min-h-[40px]"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-white/90 text-black text-[13px] font-semibold apple-tap min-h-[40px]"
           >
-            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+            <Plus className="w-3.5 h-3.5 stroke-[2.5] shrink-0" />
             <span>Aggiungi Spesa</span>
           </button>
         </div>
@@ -583,7 +583,7 @@ export function MoneyView({
       {/* 3. DUAL PANEL SPLIT: SPESE (7 cols) & ENTRATE (5 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         {/* SPESE */}
-        <section className="lg:col-span-7 hud-glass rounded-[18px] p-5 sm:p-6 space-y-4">
+        <section className="lg:col-span-7 hud-glass rounded-[18px] p-4 sm:p-6 space-y-4 min-w-0">
           <HudSectionHeader
             code="02"
             label="Spese"
@@ -603,16 +603,16 @@ export function MoneyView({
               {filteredExpenses.map((exp) => (
                 <div
                   key={exp.id}
-                  className={`p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors ${
+                  className={`p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors min-w-0 ${
                     exp.paid ? 'opacity-50' : 'hover:bg-white/[0.02]'
                   }`}
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3 min-w-0 flex-1">
                     <button
                       type="button"
                       onClick={() => onToggleExpensePaid(exp.id, !exp.paid)}
                       aria-label={exp.paid ? 'Segna come non pagata' : 'Segna come pagata'}
-                      className="mt-0.5 min-w-[28px] min-h-[28px] flex items-center justify-center rounded-full text-[#7A828C] hover:text-white apple-tap"
+                      className="mt-0.5 min-w-[28px] min-h-[28px] flex items-center justify-center rounded-full text-[#7A828C] hover:text-white apple-tap shrink-0"
                     >
                       {exp.paid ? (
                         <CheckCircle2 className="w-5 h-5 text-white" />
@@ -621,24 +621,24 @@ export function MoneyView({
                       )}
                     </button>
 
-                    <div className="border-l border-white/15 pl-3">
-                      <div className="flex items-center gap-2 font-mono text-[10px] text-[#8A929A]">
+                    <div className="border-l border-white/15 pl-3 min-w-0 flex-1">
+                      <div className="flex items-center flex-wrap gap-x-2 gap-y-0.5 font-mono text-[10px] text-[#8A929A]">
                         <span>{getCategoryLabel(exp.category)}</span>
                         <span>·</span>
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
+                          <Clock className="w-3 h-3 shrink-0" />
                           {exp.dateLabel}
                         </span>
                       </div>
                       <h4
-                        className={`text-[14px] font-semibold mt-0.5 tracking-tight ${
+                        className={`text-[14px] font-semibold mt-0.5 tracking-tight break-words ${
                           exp.paid ? 'line-through text-[#7A828C]' : 'text-white'
                         }`}
                       >
                         {exp.title}
                       </h4>
                       {exp.notes && (
-                        <p className="text-[12px] text-[#7A828C] mt-0.5 leading-relaxed">
+                        <p className="text-[12px] text-[#7A828C] mt-0.5 leading-relaxed break-words">
                           {exp.notes}
                         </p>
                       )}
@@ -646,7 +646,7 @@ export function MoneyView({
                   </div>
 
                   <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-0 border-white/[0.06]">
-                    <div className="text-right">
+                    <div className="text-left sm:text-right">
                       <div className="font-mono text-[16px] font-semibold tabular-nums text-white">
                         −{exp.amount.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
                       </div>
@@ -685,7 +685,7 @@ export function MoneyView({
         </section>
 
         {/* ENTRATE */}
-        <section className="lg:col-span-5 hud-glass rounded-[18px] p-5 sm:p-6 space-y-4">
+        <section className="lg:col-span-5 hud-glass rounded-[18px] p-4 sm:p-6 space-y-4 min-w-0">
           <HudSectionHeader
             code="03"
             label="Entrate & Accrediti"
@@ -703,27 +703,27 @@ export function MoneyView({
               {financialProfile.incomes.map((inc) => (
                 <div
                   key={inc.id}
-                  className="p-4 flex items-center justify-between gap-3"
+                  className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0"
                 >
-                  <div className="flex items-start gap-3 min-w-0">
+                  <div className="flex items-start gap-3 min-w-0 flex-1">
                     <div className="w-8 h-8 rounded-[8px] bg-white/[0.05] border border-white/10 text-white flex items-center justify-center shrink-0 mt-0.5">
                       <ArrowDownLeft className="w-4 h-4" />
                     </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 font-mono text-[10px] text-[#8A929A]">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center flex-wrap gap-x-2 gap-y-0.5 font-mono text-[10px] text-[#8A929A]">
                         <span className={inc.received ? 'text-[#3FB979]' : 'text-[#8A929A]'}>
                           {inc.received ? 'ACCREDITATO' : 'IN ATTESA'}
                         </span>
                         <span>·</span>
                         <span>{inc.dateLabel}</span>
                       </div>
-                      <h4 className="text-[14px] font-semibold text-white mt-0.5 truncate">
+                      <h4 className="text-[14px] font-semibold text-white mt-0.5 break-words">
                         {inc.title}
                       </h4>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2.5 shrink-0">
+                  <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0 pt-2 sm:pt-0 border-t sm:border-0 border-white/[0.06]">
                     <div className="font-mono text-[15px] font-semibold text-white tabular-nums">
                       +{inc.amount.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
                     </div>

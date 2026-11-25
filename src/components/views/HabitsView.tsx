@@ -98,7 +98,7 @@ export function HabitsView({
           </button>
         </div>
       ) : (
-        <section className="hud-glass rounded-[18px] p-5 sm:p-6 space-y-5">
+        <section className="hud-glass rounded-[18px] p-4 sm:p-6 space-y-5 min-w-0">
           <HudSectionHeader
             code="01"
             label="Matrice Abitudini"
@@ -114,20 +114,20 @@ export function HabitsView({
               return (
                 <div
                   key={habit.id}
-                  className="p-4 sm:p-5 rounded-[14px] hud-cell transition-all"
+                  className="p-3.5 sm:p-5 rounded-[14px] hud-cell transition-all min-w-0"
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 min-w-0">
                     {/* Left: Info & Streak */}
                     <div className="flex-1 min-w-0 space-y-1.5">
-                      <div className="flex items-center gap-2.5 flex-wrap">
-                        <span className="font-mono text-[10px] text-[#6E7681]">
+                      <div className="flex items-center gap-2 flex-wrap min-w-0">
+                        <span className="font-mono text-[10px] text-[#6E7681] shrink-0">
                           {String(index + 1).padStart(2, '0')}
                         </span>
-                        <h3 className="text-[16px] font-semibold text-white truncate">
+                        <h3 className="text-[16px] font-semibold text-white break-words min-w-0">
                           {habit.title}
                         </h3>
 
-                        <span className="inline-flex items-center gap-1 font-mono text-[11px] text-[#E5943C]">
+                        <span className="inline-flex items-center gap-1 font-mono text-[11px] text-[#E5943C] shrink-0">
                           <Flame className="w-3.5 h-3.5" />
                           <span className="tabular-nums">{habit.streak}g</span>
                         </span>
@@ -137,29 +137,31 @@ export function HabitsView({
                             type="button"
                             onClick={() => onDeleteHabit(habit.id)}
                             aria-label={`Elimina ${habit.title}`}
-                            className="p-1 text-[#6E7681] hover:text-white apple-tap ml-auto lg:ml-0"
+                            className="p-1 text-[#6E7681] hover:text-white apple-tap ml-auto lg:ml-0 shrink-0"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         )}
                       </div>
 
-                      <p className="text-[13px] text-[#8A929A] leading-snug">
+                      <p className="text-[13px] text-[#8A929A] leading-snug break-words">
                         {habit.subtitle}
                       </p>
 
-                      <div className="font-mono text-[11px] text-[#7A828C] tabular-nums">
-                        TARGET: <span className="text-white font-semibold">{completedThisWeek}/{weeklyTarget}</span> GIORNI
+                      <div className="font-mono text-[11px] text-[#7A828C] tabular-nums flex flex-wrap items-center gap-x-2">
+                        <span>
+                          TARGET: <span className="text-white font-semibold">{completedThisWeek}/{weeklyTarget}</span> GIORNI
+                        </span>
                         {isTargetMet && (
-                          <span className="ml-2 text-[#3FB979] font-semibold">
+                          <span className="text-[#3FB979] font-semibold">
                             · COMPLETATO
                           </span>
                         )}
                       </div>
                     </div>
 
-                    {/* Right: 7-day Tactical Grid Tiles (Image 2 style: active flips solid white with bottom bar) */}
-                    <div className="grid grid-cols-7 gap-1.5 sm:gap-2 self-start lg:self-auto w-full lg:w-auto">
+                    {/* Right: 7-day Tactical Grid Tiles */}
+                    <div className="grid grid-cols-7 gap-1 sm:gap-2 self-stretch lg:self-auto w-full lg:w-auto min-w-0">
                       {days.map((day) => {
                         const isDone = habit.completedDates.includes(day.dateStr);
                         return (
@@ -168,7 +170,7 @@ export function HabitsView({
                             type="button"
                             onClick={() => onToggleHabitDay(habit.id, day.dateStr)}
                             aria-label={`${habit.title} ${day.dayLabel} ${day.dateStr} ${isDone ? 'completato' : 'non completato'}`}
-                            className={`relative flex flex-col items-center justify-between px-2 py-2 sm:w-12 h-16 rounded-[10px] border transition-all apple-tap overflow-hidden ${
+                            className={`relative flex flex-col items-center justify-between px-1 sm:px-2 py-2 w-full sm:w-12 h-14 sm:h-16 rounded-[10px] border transition-all apple-tap overflow-hidden min-w-0 ${
                               day.isToday && !isDone ? 'border-white/35' : ''
                             } ${
                               isDone
@@ -186,7 +188,7 @@ export function HabitsView({
 
                             <div className="flex items-center justify-center">
                               {isDone ? (
-                                <Check className="w-4 h-4 stroke-[2.8]" />
+                                <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.8]" />
                               ) : (
                                 <span className="w-2 h-2 rounded-full border border-white/25" />
                               )}

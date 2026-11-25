@@ -35,7 +35,7 @@ export function AppleSegmentedControl<T extends string>({
     <div
       role="tablist"
       aria-label={ariaLabel}
-      className={`relative inline-flex items-center p-1 bg-white/[0.04] border border-white/[0.09] rounded-[10px] select-none ${className}`}
+      className={`relative flex flex-wrap sm:inline-flex items-center gap-1 p-1 bg-white/[0.04] border border-white/[0.09] rounded-[10px] select-none max-w-full w-full sm:w-auto ${className}`}
     >
       {options.map((option) => {
         const isSelected = option.value === value;
@@ -46,8 +46,8 @@ export function AppleSegmentedControl<T extends string>({
             type="button"
             aria-selected={isSelected}
             onClick={() => onChange(option.value)}
-            className={`relative z-10 flex items-center justify-center gap-1.5 transition-all duration-200 rounded-[7px] font-medium apple-tap whitespace-nowrap shrink-0 ${
-              isSm ? 'px-3 py-1.5 text-[12px] min-h-[32px]' : 'px-4 py-1.5 text-[13px] min-h-[38px]'
+            className={`relative z-10 flex-auto sm:flex-initial flex items-center justify-center gap-1.5 transition-all duration-200 rounded-[7px] font-medium apple-tap min-w-fit whitespace-nowrap ${
+              isSm ? 'px-2.5 sm:px-3 py-1.5 text-[12px] min-h-[32px]' : 'px-3 sm:px-4 py-1.5 text-[13px] min-h-[38px]'
             } ${
               isSelected
                 ? 'bg-white text-black font-semibold'
@@ -55,7 +55,7 @@ export function AppleSegmentedControl<T extends string>({
             }`}
           >
             {option.icon && <span className="shrink-0">{option.icon}</span>}
-            <span className="truncate">{option.label}</span>
+            <span>{option.label}</span>
             {option.badge !== undefined && (
               <span
                 className={`ml-1 px-1.5 py-0.2 rounded-full font-mono text-[10px] font-semibold ${

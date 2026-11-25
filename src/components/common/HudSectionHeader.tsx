@@ -26,22 +26,22 @@ export function HudSectionHeader({
   actionLabel,
 }: HudSectionHeaderProps) {
   return (
-    <div className="flex items-center gap-3 w-full">
-      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-white/[0.06] border border-white/[0.1] shrink-0">
+    <div className="flex items-center gap-2 sm:gap-3 w-full min-w-0">
+      <div className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-[4px] bg-white/[0.06] border border-white/[0.1] min-w-0 max-w-full">
         {code && (
-          <span className="font-mono text-[10px] font-semibold text-[#7A828C] tracking-wider">
+          <span className="font-mono text-[10px] font-semibold text-[#7A828C] tracking-wider shrink-0">
             {code}
           </span>
         )}
-        <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#E2E6EC]">
+        <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] sm:tracking-[0.14em] text-[#E2E6EC] truncate">
           {label}
         </span>
       </div>
 
-      <div className="flex-1 h-px bg-white/[0.09]" />
+      <div className="flex-1 min-w-[8px] h-px bg-white/[0.09]" />
 
       {rightText && (
-        <span className="font-mono text-[11px] text-[#7A828C] tabular-nums shrink-0">
+        <span className="font-mono text-[10px] sm:text-[11px] text-[#7A828C] tabular-nums truncate max-w-[42%] sm:max-w-none shrink-0">
           {rightText}
         </span>
       )}

@@ -70,14 +70,14 @@ export function AppleNavBar({
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[#07090B]/78 backdrop-blur-xl border-b border-white/[0.08]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-6xl mx-auto px-3.5 sm:px-6 h-16 flex items-center justify-between gap-3 sm:gap-4 min-w-0">
         {/* Zone 1: Active Section Title */}
-        <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center gap-3 min-w-0 flex-1">
           <div className="flex flex-col justify-center min-w-0">
-            <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-[#7A828C] truncate">
+            <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-[#7A828C] truncate leading-tight">
               {getSubtitle(currentTab)}
             </span>
-            <h1 className="text-[20px] sm:text-[22px] font-semibold tracking-tight text-white leading-none mt-0.5 truncate">
+            <h1 className="text-[20px] sm:text-[22px] font-semibold tracking-tight text-white leading-[1.2] pb-0.5 mt-0.5 truncate">
               {getTabTitle(currentTab)}
             </h1>
           </div>

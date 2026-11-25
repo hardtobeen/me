@@ -138,7 +138,7 @@ export function TodayView({
       {/* TOP HUD SPLIT: Left Telemetry Focus & Stepped Chart + Right Collapsible Status/Warning Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
         {/* LEFT PANEL (7 cols): Focus Telemetry & 7-Day Stepped Graph */}
-        <section className="lg:col-span-7 hud-glass rounded-[18px] p-5 sm:p-6 flex flex-col justify-between gap-5">
+        <section className="lg:col-span-7 hud-glass rounded-[18px] p-4 sm:p-6 flex flex-col justify-between gap-5 min-w-0">
           <div className="flex items-center justify-between gap-3">
             <span className="text-[14px] font-medium text-[#E2E6EC] tracking-tight">
               Focus Quotidiano & Ritmo
@@ -213,10 +213,10 @@ export function TodayView({
                         />
                       </div>
                       <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-0.5 mt-1.5">
-                        <span className="font-mono text-[9px] text-[#7A828C] tracking-wider leading-none">
+                        <span className="font-mono text-[8px] sm:text-[9px] text-[#7A828C] tracking-wider leading-none">
                           {day.label}
                         </span>
-                        <span className="font-mono text-[9px] text-[#9EA7B0] tabular-nums leading-none">
+                        <span className="font-mono text-[8px] sm:text-[9px] text-[#9EA7B0] tabular-nums leading-none">
                           {day.pct}%
                         </span>
                       </div>
@@ -235,33 +235,33 @@ export function TodayView({
           </div>
 
           {/* 3-Column Numbered Tactical Telemetry Strip */}
-          <div className="grid grid-cols-3 gap-2.5 pt-1">
+          <div className="grid grid-cols-3 gap-2 sm:gap-2.5 pt-1 min-w-0">
             <button
               type="button"
               onClick={onOpenHabitsTab}
-              className="hud-cell rounded-[10px] p-3 text-left hover:border-white/20 transition-colors apple-tap"
+              className="hud-cell rounded-[10px] p-2.5 sm:p-3 text-left hover:border-white/20 transition-colors apple-tap min-w-0"
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="font-mono text-[10px] text-[#6E7681]">01</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
               </div>
-              <span className="block font-mono text-[10px] uppercase tracking-wider text-[#8A929A]">
+              <span className="block font-mono text-[9px] sm:text-[10px] uppercase tracking-wider text-[#8A929A] truncate">
                 Abitudini
               </span>
-              <span className="font-mono text-[15px] font-semibold text-white tabular-nums">
+              <span className="font-mono text-[14px] sm:text-[15px] font-semibold text-white tabular-nums truncate block">
                 {habitsDone}/{habits.length}
               </span>
             </button>
 
-            <div className="hud-cell rounded-[10px] p-3 text-left">
+            <div className="hud-cell rounded-[10px] p-2.5 sm:p-3 text-left min-w-0">
               <div className="flex items-center justify-between mb-1">
                 <span className="font-mono text-[10px] text-[#6E7681]">02</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#9EA7B0]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#9EA7B0] shrink-0" />
               </div>
-              <span className="block font-mono text-[10px] uppercase tracking-wider text-[#8A929A]">
+              <span className="block font-mono text-[9px] sm:text-[10px] uppercase tracking-wider text-[#8A929A] truncate">
                 Priorità
               </span>
-              <span className="font-mono text-[15px] font-semibold text-white tabular-nums">
+              <span className="font-mono text-[14px] sm:text-[15px] font-semibold text-white tabular-nums truncate block">
                 {tasksDone}/{tasks.length}
               </span>
             </div>
@@ -269,16 +269,16 @@ export function TodayView({
             <button
               type="button"
               onClick={onOpenCourageTab}
-              className="hud-cell rounded-[10px] p-3 text-left hover:border-white/20 transition-colors apple-tap"
+              className="hud-cell rounded-[10px] p-2.5 sm:p-3 text-left hover:border-white/20 transition-colors apple-tap min-w-0"
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="font-mono text-[10px] text-[#6E7681]">03</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#E5943C]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E5943C] shrink-0" />
               </div>
-              <span className="block font-mono text-[10px] uppercase tracking-wider text-[#8A929A]">
+              <span className="block font-mono text-[9px] sm:text-[10px] uppercase tracking-wider text-[#8A929A] truncate">
                 Coraggio
               </span>
-              <span className="font-mono text-[15px] font-semibold text-white tabular-nums">
+              <span className="font-mono text-[14px] sm:text-[15px] font-semibold text-white tabular-nums truncate block">
                 {rejectionsCount}/10
               </span>
             </button>
@@ -286,7 +286,7 @@ export function TodayView({
         </section>
 
         {/* RIGHT PANEL (5 cols): Collapsible Alert / Insight Panel */}
-        <aside className="lg:col-span-5 hud-glass rounded-[18px] p-5 sm:p-6 flex flex-col justify-between gap-4">
+        <aside className="lg:col-span-5 hud-glass rounded-[18px] p-4 sm:p-6 flex flex-col justify-between gap-4 min-w-0">
           <div className="space-y-4">
             {/* Collapsible Header */}
             <div className="flex items-center justify-between">
@@ -309,8 +309,8 @@ export function TodayView({
               <>
                 {/* Sub-section 1: Active Operational Fronts / Insight */}
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-[12px] text-[#9EA7B0]">
-                    <AlertCircle className="w-3.5 h-3.5 text-[#8A929A]" />
+                  <div className="flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[12px] text-[#9EA7B0]">
+                    <AlertCircle className="w-3.5 h-3.5 text-[#8A929A] shrink-0" />
                     <span className="font-medium text-[#E2E6EC]">Situazione Operativa</span>
                     <span className="font-mono text-[11px] text-[#6E7681]">
                       ({activeFrontsCount} {activeFrontsCount === 1 ? 'fronte' : 'fronti'})
@@ -323,7 +323,7 @@ export function TodayView({
                     }`}
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-2.5">
+                      <div className="flex items-center gap-2.5 min-w-0">
                         <span
                           className={`w-5 h-5 rounded-full font-mono text-[11px] font-bold flex items-center justify-center shrink-0 ${
                             pendingTasks.length > 0
@@ -333,8 +333,8 @@ export function TodayView({
                         >
                           {pendingTasks.length}
                         </span>
-                        <div>
-                          <p className="text-[13px] font-semibold text-white leading-tight">
+                        <div className="min-w-0">
+                          <p className="text-[13px] font-semibold text-white leading-tight break-words">
                             {dailyInsight.title}
                           </p>
                           <span className="font-mono text-[10px] text-[#7A828C]">
@@ -346,13 +346,13 @@ export function TodayView({
 
                     {/* Vertical Hairline Connector Detail Block */}
                     <div className="pl-2 space-y-2">
-                      <div className="border-l border-white/20 pl-3 py-0.5">
-                        <p className="text-[12px] font-medium text-[#E2E6EC]">
+                      <div className="border-l border-white/20 pl-3 py-0.5 min-w-0">
+                        <p className="text-[12px] font-medium text-[#E2E6EC] break-words">
                           {topPriorityTasks.length > 0
                             ? topPriorityTasks[0].title
                             : 'Nessuna priorità impostata'}
                         </p>
-                        <span className="text-[11px] text-[#7A828C]">
+                        <span className="text-[11px] text-[#7A828C] break-words block">
                           {topPriorityTasks.length > 0
                             ? `Fronte: ${getProjectInfo(topPriorityTasks[0].projectId)}`
                             : 'Aggiungi una priorità per bloccare il focus'}
@@ -360,7 +360,7 @@ export function TodayView({
                       </div>
 
                       {unpaidExpensesCount > 0 && (
-                        <div className="border-l border-[#E5943C]/60 pl-3 py-0.5">
+                        <div className="border-l border-[#E5943C]/60 pl-3 py-0.5 min-w-0">
                           <p className="text-[12px] font-medium text-[#E2E6EC]">
                             {unpaidExpensesCount} {unpaidExpensesCount === 1 ? 'spesa da saldare' : 'spese da saldare'}
                           </p>
@@ -372,13 +372,13 @@ export function TodayView({
                     </div>
 
                     {/* Recommendation Footer */}
-                    <div className="pt-2 border-t border-white/[0.08] flex items-start gap-2.5">
+                    <div className="pt-2 border-t border-white/[0.08] flex items-start gap-2.5 min-w-0">
                       <Sparkles className="w-3.5 h-3.5 text-[#D4D8DD] shrink-0 mt-0.5" />
-                      <div>
+                      <div className="min-w-0">
                         <span className="font-mono text-[10px] uppercase tracking-wider text-[#9EA7B0] block">
                           Consigliato
                         </span>
-                        <p className="text-[12px] text-[#8A929A] leading-snug">
+                        <p className="text-[12px] text-[#8A929A] leading-snug break-words">
                           {dailyInsight.advice}
                         </p>
                       </div>
@@ -389,8 +389,8 @@ export function TodayView({
                 {/* Sub-section 2: Cashflow Glance Row */}
                 {financialProfile && onOpenMoneyTab && (
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-[12px] text-[#9EA7B0]">
-                      <Clock className="w-3.5 h-3.5 text-[#8A929A]" />
+                    <div className="flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[12px] text-[#9EA7B0]">
+                      <Clock className="w-3.5 h-3.5 text-[#8A929A] shrink-0" />
                       <span className="font-medium text-[#E2E6EC]">Bilancio Conto</span>
                       <span className="font-mono text-[11px] text-[#6E7681]">
                         ({financialProfile.lastUpdated})
@@ -434,7 +434,7 @@ export function TodayView({
       {/* BOTTOM DUAL COMMAND PANELS */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         {/* LEFT PANEL (7 cols): Priorità & Attività */}
-        <section className="lg:col-span-7 hud-glass rounded-[18px] p-5 sm:p-6 space-y-4">
+        <section className="lg:col-span-7 hud-glass rounded-[18px] p-4 sm:p-6 space-y-4 min-w-0">
           <HudSectionHeader
             code="01"
             label="Priorità & Attività"
@@ -456,7 +456,7 @@ export function TodayView({
               {topPriorityTasks.map((task, idx) => (
                 <div
                   key={task.id}
-                  className={`flex items-center gap-3 px-4 py-3 transition-colors ${
+                  className={`flex items-center gap-3 px-4 py-3 transition-colors min-w-0 ${
                     task.completed ? 'opacity-45' : 'hover:bg-white/[0.02]'
                   }`}
                 >
@@ -464,7 +464,7 @@ export function TodayView({
                     type="button"
                     onClick={() => onToggleTask(task.id)}
                     aria-label={task.completed ? `Segna ${task.title} come non completato` : `Completa ${task.title}`}
-                    className="min-h-[40px] min-w-[40px] -ml-1.5 flex items-center justify-center text-[#7A828C] hover:text-white apple-tap"
+                    className="min-h-[40px] min-w-[40px] -ml-1.5 flex items-center justify-center text-[#7A828C] hover:text-white apple-tap shrink-0"
                   >
                     {task.completed ? (
                       <CheckCircle2 className="w-5 h-5 text-white" />
@@ -474,19 +474,19 @@ export function TodayView({
                   </button>
 
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 font-mono text-[10px] text-[#8A929A] mb-0.5">
-                      <span className="text-white font-semibold">TOP 0{idx + 1}</span>
-                      <span>·</span>
+                    <div className="flex items-center gap-2 font-mono text-[10px] text-[#8A929A] mb-0.5 min-w-0">
+                      <span className="text-white font-semibold shrink-0">TOP 0{idx + 1}</span>
+                      <span className="shrink-0">·</span>
                       <span className="truncate">{getProjectInfo(task.projectId)}</span>
                       {task.estimatedMinutes && (
                         <>
-                          <span>·</span>
-                          <span>{task.estimatedMinutes}m</span>
+                          <span className="shrink-0">·</span>
+                          <span className="shrink-0">{task.estimatedMinutes}m</span>
                         </>
                       )}
                     </div>
                     <p
-                      className={`text-[14px] font-medium leading-snug ${
+                      className={`text-[14px] font-medium leading-snug break-words ${
                         task.completed ? 'line-through text-[#6E7681]' : 'text-white'
                       }`}
                     >
@@ -499,7 +499,7 @@ export function TodayView({
               {otherTasks.map((task) => (
                 <div
                   key={task.id}
-                  className={`flex items-center gap-3 px-4 py-2.5 transition-colors ${
+                  className={`flex items-center gap-3 px-4 py-2.5 transition-colors min-w-0 ${
                     task.completed ? 'opacity-45' : 'hover:bg-white/[0.02]'
                   }`}
                 >
@@ -507,7 +507,7 @@ export function TodayView({
                     type="button"
                     onClick={() => onToggleTask(task.id)}
                     aria-label={task.completed ? `Segna ${task.title} come non completato` : `Completa ${task.title}`}
-                    className="min-h-[40px] min-w-[40px] -ml-1.5 flex items-center justify-center text-[#7A828C] hover:text-white apple-tap"
+                    className="min-h-[40px] min-w-[40px] -ml-1.5 flex items-center justify-center text-[#7A828C] hover:text-white apple-tap shrink-0"
                   >
                     {task.completed ? (
                       <CheckCircle2 className="w-4 h-4 text-white" />
@@ -518,13 +518,13 @@ export function TodayView({
 
                   <div className="flex-1 min-w-0">
                     <p
-                      className={`text-[13px] font-medium leading-snug ${
+                      className={`text-[13px] font-medium leading-snug break-words ${
                         task.completed ? 'line-through text-[#6E7681]' : 'text-[#E2E6EC]'
                       }`}
                     >
                       {task.title}
                     </p>
-                    <span className="font-mono text-[10px] text-[#6E7681]">
+                    <span className="font-mono text-[10px] text-[#6E7681] truncate block">
                       {getProjectInfo(task.projectId)}
                     </span>
                   </div>
@@ -536,7 +536,7 @@ export function TodayView({
           {/* Inline Tactical Command Input */}
           <form
             onSubmit={handleQuickSubmit}
-            className="hud-cell rounded-[12px] p-2.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
+            className="hud-cell rounded-[12px] p-2.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 min-w-0"
           >
             <input
               type="text"
@@ -544,15 +544,15 @@ export function TodayView({
               onChange={(e) => setQuickTitle(e.target.value)}
               placeholder="Aggiungi una nuova attività per oggi..."
               aria-label="Nuova attività"
-              className="flex-1 px-2.5 py-2 text-[13px] bg-transparent text-white placeholder-[#525860] focus:outline-none min-h-[40px]"
+              className="flex-1 min-w-0 px-2.5 py-2 text-[13px] bg-transparent text-white placeholder-[#525860] focus:outline-none min-h-[40px]"
             />
 
-            <div className="flex items-center gap-1.5 shrink-0">
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-1.5 min-w-0">
               <select
                 value={quickProject}
                 onChange={(e) => setQuickProject(e.target.value)}
                 aria-label="Seleziona progetto"
-                className="px-2.5 py-1.5 text-[12px] font-mono rounded-[8px] bg-white/[0.06] border border-white/[0.08] text-[#D4D8DD] focus:outline-none min-h-[36px]"
+                className="flex-1 sm:flex-initial min-w-0 max-w-full sm:max-w-[150px] px-2.5 py-1.5 text-[12px] font-mono rounded-[8px] bg-white/[0.06] border border-white/[0.08] text-[#D4D8DD] focus:outline-none min-h-[36px] truncate"
               >
                 {projects.length > 0 ? (
                   projects.map((p) => (
@@ -571,7 +571,7 @@ export function TodayView({
                 type="button"
                 onClick={() => setIsTopPriority(!isTopPriority)}
                 aria-label="Contrassegna come Top Priority"
-                className={`px-2.5 py-1.5 font-mono text-[11px] font-semibold rounded-[8px] border transition-colors apple-tap min-h-[36px] ${
+                className={`px-2.5 py-1.5 font-mono text-[11px] font-semibold rounded-[8px] border transition-colors apple-tap min-h-[36px] shrink-0 ${
                   isTopPriority
                     ? 'bg-white text-black border-white'
                     : 'bg-white/[0.04] border-white/[0.08] text-[#8A929A] hover:text-white'
@@ -584,7 +584,7 @@ export function TodayView({
                 type="submit"
                 disabled={!quickTitle.trim()}
                 aria-label="Aggiungi task"
-                className="inline-flex items-center gap-1 px-3.5 py-1.5 text-[12px] font-semibold rounded-[8px] bg-white text-black disabled:opacity-30 hover:bg-white/90 apple-tap min-h-[36px]"
+                className="inline-flex items-center justify-center gap-1 px-3.5 py-1.5 text-[12px] font-semibold rounded-[8px] bg-white text-black disabled:opacity-30 hover:bg-white/90 apple-tap min-h-[36px] shrink-0"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Aggiungi</span>
@@ -594,7 +594,7 @@ export function TodayView({
         </section>
 
         {/* RIGHT PANEL (5 cols): Numbered Tactical Module Tiles (Image 2 & 3 style) */}
-        <section className="lg:col-span-5 hud-glass rounded-[18px] p-5 sm:p-6 space-y-4">
+        <section className="lg:col-span-5 hud-glass rounded-[18px] p-4 sm:p-6 space-y-4 min-w-0">
           <HudSectionHeader code="02" label="Moduli Rapidi" />
 
           <div className="grid grid-cols-2 gap-2.5">
@@ -602,17 +602,17 @@ export function TodayView({
             <button
               type="button"
               onClick={onOpenMoneyTab}
-              className="hud-cell rounded-[12px] p-3.5 text-left hover:border-white/25 transition-all apple-tap flex flex-col justify-between min-h-[108px] relative overflow-hidden"
+              className="hud-cell rounded-[12px] p-3.5 text-left hover:border-white/25 transition-all apple-tap flex flex-col justify-between min-h-[108px] min-w-0 relative overflow-hidden"
             >
               <div className="flex items-center justify-between w-full">
                 <span className="font-mono text-[10px] text-[#6E7681]">01</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-[#6E7681]" />
               </div>
-              <div className="mt-2">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#8A929A] block">
+              <div className="mt-2 min-w-0 w-full">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#8A929A] block truncate">
                   Bilancio
                 </span>
-                <span className="text-[18px] font-semibold text-white tabular-nums">
+                <span className="text-[17px] sm:text-[18px] font-semibold text-white tabular-nums block truncate">
                   {bankBalance.toLocaleString('it-IT')} €
                 </span>
               </div>
